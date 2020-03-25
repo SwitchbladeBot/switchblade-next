@@ -1,0 +1,25 @@
+{
+  "name": "switchblade-next",
+  "version": "1.0.0",
+  "description": "The next version of Switchblade",
+  "scripts": {},
+  "engines": {
+    "node": "12.16.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/SwitchbladeBot/switchblade-next.git"
+  },
+  "keywords": [
+    "discord"
+  ],
+  "author": "Switchblade Team",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SwitchbladeBot/switchblade-next/issues"
+  },
+  "homepage": "https://github.com/SwitchbladeBot/switchblade-next#readme",
+  "dependencies": {},
+  "devDependencies": {},
+  "optionalDependencies": {}
+}
