@@ -19,7 +19,6 @@ module.exports = class ListenerLoader extends Loader {
 
     // Load all events from functions listed on listener.discordEvents
     const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1)
-    console.log(listener.discordEvents)
     listener.discordEvents.forEach(event => {
       this.client.on(event, (...e) => listener['on' + capitalize(event)](...e))
     })
