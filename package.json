@@ -2,7 +2,9 @@
   "name": "switchblade-next",
   "version": "1.0.0",
   "description": "The next version of Switchblade",
-  "scripts": {},
+  "scripts": {
+    "start-dev": "nodemon --exec node -r dotenv/config src"
+  },
   "engines": {
     "node": "12.16.1"
   },
@@ -19,7 +21,11 @@
     "url": "https://github.com/SwitchbladeBot/switchblade-next/issues"
   },
   "homepage": "https://github.com/SwitchbladeBot/switchblade-next#readme",
-  "dependencies": {},
-  "devDependencies": {},
+  "dependencies": {
+    "eris": "^0.11.2"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0"
+  },
   "optionalDependencies": {}
 }
