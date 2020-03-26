@@ -2,6 +2,7 @@
   "name": "switchblade-next",
   "version": "1.0.0",
   "description": "The next version of Switchblade",
+  "main": "index.js",
   "scripts": {
     "start-dev": "nodemon --exec node -r dotenv/config src"
   },
@@ -22,6 +23,7 @@
   },
   "homepage": "https://github.com/SwitchbladeBot/switchblade-next#readme",
   "dependencies": {
+    "chalk": "^3.0.0",
     "eris": "^0.11.2"
   },
   "devDependencies": {

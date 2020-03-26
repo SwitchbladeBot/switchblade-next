@@ -1,4 +1,5 @@
 module.exports = {
-    // Base
-    Switchblade: require('./base/Switchblade') 
+    // Loader
+    Loader: require('./Loader.js'),
+    Listener: require('./Listener.js')
 }
