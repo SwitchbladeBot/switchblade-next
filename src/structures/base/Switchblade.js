@@ -1,5 +1,6 @@
 const { CommandClient } = require('eris')
 const Loaders = require('../../loaders')
+const { readFileSync } = require('fs')
 const chalk = require('chalk')
 
 module.exports = class Switchblade extends CommandClient {
@@ -27,6 +28,7 @@ module.exports = class Switchblade extends CommandClient {
   }
 
   start() {
+    console.log(readFileSync('bigtitle.txt', 'utf8').toString().replace(/{UNICODE}/g, '\u001b['))
     this.log('Starting switchblade...')
     this.initializeLoaders()
     this.connect()
