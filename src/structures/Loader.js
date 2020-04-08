@@ -22,7 +22,7 @@ module.exports = class Loader {
       if (!success) throw new Error(`Unhandled error`)
       return success
     } catch (e) {
-      this.log(`Failed to load ${this.name}`, 'error', 'Loader')
+      this.client.logger.error(`Failed to load ${this.name}`, 'error', { label: 'Loader' })
       this.logError(e)
       return false
     }
@@ -39,15 +39,15 @@ module.exports = class Loader {
     const successFunction = file => {
       try {
         if (this.loadFile(file)) success++
-        else throw new Error(`The '${this.constructor.name}.loadFile()' returned an unhandled error.`)
+        else throw new Error(`'${this.constructor.name}.loadFile()' returned an unhandled error.`)
       }
       catch (e) {
         errorFunction(e)
       }
     }
     await FileUtils.requireDirectory(path, successFunction, errorFunction, recursive).then(() => {
-      if (fails) this.log(`${success} types of ${this.name} loaded, ${fails} failed.`, 'info', this.name)
-      else this.log(`All ${success} types of ${this.name} loaded without errors.`, 'info', this.name)
+      if (fails) this.client.logger.warn(`${success} types of ${this.name} loaded, ${fails} failed.`, { label: this.name })
+      else this.client.logger.info(`All ${success} types of ${this.name} loaded without errors.`, 'info', { label: this.name })
     })
     return true
   }
@@ -58,13 +58,5 @@ module.exports = class Loader {
 
   loadFile(file) {
     throw new Error(`The ${this.name} loader has not implemented the loadFile() function`)
-  }
-
-  log(...args) {
-    return this.client.log(...args)
-  }
-
-  logError(...args) {
-    return this.client.logError(...args)
   }
 }

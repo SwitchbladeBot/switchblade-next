@@ -8,6 +8,6 @@ module.exports = class MainListener extends Listener {
   }
 
   onConnect (id) {
-    this.client.log('Switchblade stablished a successfull connection. Connected as shard ' + chalk.blue(id))
+    this.client.logger.info(`Switchblade established a successfull connection. Connected as shard ${id}.`, { label: 'Connection' })
   }
 }

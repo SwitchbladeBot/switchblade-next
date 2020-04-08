@@ -2,7 +2,7 @@ const { Loader, Listener } = require('../structures')
 
 module.exports = class ListenerLoader extends Loader {
   constructor(client) {
-    super({ critical: false, name: 'Listeners' }, client)
+    super({ critical: true, name: 'Listeners' }, client)
     this.listeners = []
   }
 
