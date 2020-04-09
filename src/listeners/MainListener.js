@@ -8,6 +8,7 @@ module.exports = class MainListener extends Listener {
   }
 
   onConnect (id) {
+    console.log('pai ta on')
     this.client.logger.info(`Switchblade established a successfull connection. Connected as shard ${id}.`, { label: 'Connection' })
   }
 }

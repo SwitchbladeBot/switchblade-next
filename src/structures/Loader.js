@@ -22,8 +22,7 @@ module.exports = class Loader {
       if (!success) throw new Error(`Unhandled error`)
       return success
     } catch (e) {
-      this.client.logger.error(`Failed to load ${this.name}`, 'error', { label: 'Loader' })
-      this.logError(e)
+      this.client.logger.error(`Failed to load ${this.name}`, { label: 'Loader' })
       return false
     }
   }
@@ -33,7 +32,7 @@ module.exports = class Loader {
     let success = 0
     let fails = 0
     const errorFunction = e => {
-      this.logError(e)
+      this.client.logger.error(e)
       fails++
     }
     const successFunction = file => {
@@ -47,7 +46,7 @@ module.exports = class Loader {
     }
     await FileUtils.requireDirectory(path, successFunction, errorFunction, recursive).then(() => {
       if (fails) this.client.logger.warn(`${success} types of ${this.name} loaded, ${fails} failed.`, { label: this.name })
-      else this.client.logger.info(`All ${success} types of ${this.name} loaded without errors.`, 'info', { label: this.name })
+      else this.client.logger.info(`All ${success} types of ${this.name} loaded without errors.`, { label: this.name })
     })
     return true
   }

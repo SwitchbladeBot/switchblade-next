@@ -8,12 +8,14 @@ module.exports = class Switchblade extends CommandClient {
   constructor(token, options, commandOptions) {
     super(token, options, commandOptions)
     this.initializeWinston()
+    this.start()
   }
 
   start() {
     if (process.env.NODE_ENV !== 'production') console.log(readFileSync('bigtitle.txt', 'utf8').toString().replace(/{UNICODE}/g, '\u001b['))
     this.logger.info('Starting switchblade...', { label: 'Switchblade' })
     this.initializeLoaders()
+    
     this.connect()
   }
 
