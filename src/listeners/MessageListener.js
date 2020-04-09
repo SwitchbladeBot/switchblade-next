@@ -7,7 +7,14 @@ module.exports = class MessageListener extends Listener {
     super({ discordEvents }, client)
   }
 
-  onMessageCreate (message) {
-    this.client.logger.info(message.content, { label: 'Message' })
+  onMessageCreate ({ content }) {
+    // isso é só pra teste até lançar as nova parada do discord e a gente fazer com base nelas
+    
+    if (!content) return
+
+    if (content.startsWith('spn!city search')) {
+      const query = content.replace('spn!city search ', '')
+      console.log(query)
+    }
   }
 }
