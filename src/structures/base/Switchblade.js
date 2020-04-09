@@ -23,7 +23,7 @@ module.exports = class Switchblade extends CommandClient {
     this.logger = winston.createLogger()
 
     if (process.env.NODE_ENV === 'production') {
-      this.logger.add(new winston.transports.Console())
+      this.logger.add(new winston.transports.Console({ level: process.env.LOGGING_LEVEL || 'silly' }))
     } else {
       this.logger.add(new winston.transports.Console({
         format: winston.format.combine(
@@ -33,7 +33,7 @@ module.exports = class Switchblade extends CommandClient {
             info => `${info.timestamp} ${info.level} [${info.label || ''}]: ${info.message}`
           )
         ),
-        level: 'silly'
+        level: process.env.LOGGING_LEVEL || 'silly'
       }))
     }
   }

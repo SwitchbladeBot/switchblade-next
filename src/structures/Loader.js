@@ -45,8 +45,8 @@ module.exports = class Loader {
       }
     }
     await FileUtils.requireDirectory(path, successFunction, errorFunction, recursive).then(() => {
-      if (fails) this.client.logger.warn(`${success} types of ${this.name} loaded, ${fails} failed.`, { label: this.name })
-      else this.client.logger.info(`All ${success} types of ${this.name} loaded without errors.`, { label: this.name })
+      if (fails) this.client.logger.warn(`${success} types of ${this.name} loaded, ${fails} failed.`, { label: 'Loader' })
+      else this.client.logger.info(`All ${success} types of ${this.name} loaded without errors.`, { label: 'Loader' })
     })
     return true
   }
