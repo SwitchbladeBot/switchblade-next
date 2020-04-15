@@ -1,6 +1,11 @@
+const Sentry = require('@sentry/node')
+Sentry.init({ dsn: process.env.SENTRY_DSN })
+
+console.log(process.env.SENTRY_DSN)
+
 const { Switchblade } = require('./structures/base')
 
-const CLUSTER_ID = process.env.INDEX_CLUSTERS_FROM_ONE ? parseInt(process.env.CLUSTER_ID) - 1 : parseInt(process.env.CLUSTER_ID)
+const CLUSTER_ID = process.env.INDEX_CLUSTER_ID_FROM_ONE ? parseInt(process.env.CLUSTER_ID) - 1 : parseInt(process.env.CLUSTER_ID)
 const firstShardID = CLUSTER_ID * parseInt(process.env.SHARDS_PER_CLUSTER)
 const lastShardID = ((CLUSTER_ID + 1) * parseInt(process.env.SHARDS_PER_CLUSTER)) - 1
 const maxShards = parseInt(process.env.SHARDS_PER_CLUSTER) * parseInt(process.env.MAX_CLUSTERS)

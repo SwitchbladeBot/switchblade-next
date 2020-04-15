@@ -1,7 +1,6 @@
 const { CommandClient } = require('eris')
 const Loaders = require('../../loaders')
 const { readFileSync } = require('fs')
-const chalk = require('chalk')
 const winston = require('winston')
 
 module.exports = class Switchblade extends CommandClient {
