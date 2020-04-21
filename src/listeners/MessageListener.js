@@ -1,5 +1,4 @@
 const { Listener } = require('../structures')
-const chalk = require('chalk')
 
 module.exports = class MessageListener extends Listener {
   constructor (client) {
