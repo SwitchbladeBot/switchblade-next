@@ -4,21 +4,21 @@ const { readFileSync } = require('fs')
 const winston = require('winston')
 
 module.exports = class Switchblade extends CommandClient {
-  constructor(token, options, commandOptions) {
+  constructor (token, options, commandOptions) {
     super(token, options, commandOptions)
     this.initializeWinston()
     this.start()
   }
 
-  start() {
+  start () {
     if (process.env.NODE_ENV !== 'production') console.log(readFileSync('bigtitle.txt', 'utf8').toString().replace(/{UNICODE}/g, '\u001b['))
     this.logger.info('Starting switchblade...', { label: 'Switchblade' })
     this.initializeLoaders()
-    
+
     this.connect()
   }
 
-  initializeWinston() {
+  initializeWinston () {
     this.logger = winston.createLogger()
 
     if (process.env.NODE_ENV === 'production') {
@@ -38,7 +38,7 @@ module.exports = class Switchblade extends CommandClient {
   }
 
   async initializeLoaders () {
-    for (let file in Loaders) {
+    for (const file in Loaders) {
       const loader = new Loaders[file](this)
       let success = true
       try {

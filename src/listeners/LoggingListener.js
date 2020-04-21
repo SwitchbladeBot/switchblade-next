@@ -11,26 +11,26 @@ module.exports = class LoggingListener extends Listener {
   }
 
   onDebug (message, shardId) {
-    this.client.logger.debug(message, { label: `Shard ${shardId || '?'}`,  })
+    this.client.logger.debug(message, { label: `Shard ${shardId || '?'}` })
   }
 
   onRawWS (packet, shardId) {
     this.client.logger.silly(packet, { label: `Shard ${shardId || '?'}`, packet })
   }
 
-  onDisconnect() {
-    this.client.logger.error('All shards disconnected', { label: `Connection` })
+  onDisconnect () {
+    this.client.logger.error('All shards disconnected', { label: 'Connection' })
   }
 
-  onShardDisconnect(error, shardId) {
-      if (error) {
-        this.client.logger.error(`Disconnected. ${error.stack || error.message}`, { label: `Shard ${shardId}`, shardId })
-      } else {
-        this.client.logger.warn('Disconnected.', { label: `Shard ${shardId}`, shardId })
-      }
+  onShardDisconnect (error, shardId) {
+    if (error) {
+      this.client.logger.error(`Disconnected. ${error.stack || error.message}`, { label: `Shard ${shardId}`, shardId })
+    } else {
+      this.client.logger.warn('Disconnected.', { label: `Shard ${shardId}`, shardId })
+    }
   }
 
-  onConnect(shardId) {
-    this.client.logger.info(`Connected to the gateway`, { label: `Shard ${shardId}`, shardId })
+  onConnect (shardId) {
+    this.client.logger.info('Connected to the gateway', { label: `Shard ${shardId}`, shardId })
   }
 }

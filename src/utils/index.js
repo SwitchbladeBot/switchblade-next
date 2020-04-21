@@ -6,14 +6,14 @@ module.exports = {
    * @param {boolean} [options.optionalOptions]
    * @returns {Object}
    */
-  createOptionHandler(structureName, structureOptions, options = {}) {
+  createOptionHandler (structureName, structureOptions, options = {}) {
     if (!options.optionalOptions && typeof options === 'undefined') {
       throw new Error(`The options of structure "${structureName}" is required.`)
     }
 
     return ({
       structureOptions,
-      optional(name, defaultValue = null) {
+      optional (name, defaultValue = null) {
         const value = structureOptions[name]
 
         return typeof value === 'undefined'
@@ -21,7 +21,7 @@ module.exports = {
           : value
       },
 
-      required(name) {
+      required (name) {
         const value = structureOptions[name]
 
         if (typeof value === 'undefined') {

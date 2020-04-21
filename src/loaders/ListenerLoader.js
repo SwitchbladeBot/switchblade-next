@@ -1,16 +1,16 @@
 const { Loader, Listener } = require('../structures')
 
 module.exports = class ListenerLoader extends Loader {
-  constructor(client) {
+  constructor (client) {
     super({ critical: true, name: 'Listeners' }, client)
     this.listeners = []
   }
 
-  load() {
+  load () {
     return this.loadFiles('src/listeners')
   }
 
-  loadFile(NewListener) {
+  loadFile (NewListener) {
     const listener = new NewListener(this.client)
     if (!(listener instanceof Listener)) throw new Error(`Failed to load ${NewListener.name}: not a Listener`)
 
@@ -22,7 +22,7 @@ module.exports = class ListenerLoader extends Loader {
     listener.discordEvents.forEach(event => {
       this.client.on(event, (...e) => listener['on' + capitalize(event)](...e))
     })
-    
+
     return true
   }
 }

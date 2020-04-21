@@ -9,7 +9,7 @@ const lastShardID = ((CLUSTER_ID + 1) * parseInt(process.env.SHARDS_PER_CLUSTER)
 const maxShards = parseInt(process.env.SHARDS_PER_CLUSTER) * parseInt(process.env.MAX_CLUSTERS)
 
 const client = new Switchblade(process.env.DISCORD_TOKEN, { firstShardID, lastShardID, maxShards }, {
-    prefix: process.env.PREFIX || 'n!' 
+  prefix: process.env.PREFIX || 'n!'
 })
 
 client.logger.info(`Starting. First Shard: ${firstShardID}; Last Shard: ${lastShardID}`, { label: `Cluster ${process.env.CLUSTER_ID}` })
