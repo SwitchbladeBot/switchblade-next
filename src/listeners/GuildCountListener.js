@@ -9,10 +9,10 @@ module.exports = class GuildCountListener extends Listener {
     super({ discordEvents }, client)
   }
 
-  onGuildCreate = this.updateGuildCount
-  onGuildDelete = this.updateGuildCount
+  onGuildCreate (guild) { this.updateGuildCount(guild) }
+  onGuildDelete (guild) { this.updateGuildCount(guild) }
 
-  updateGuildCount(guild) {
+  updateGuildCount (guild) {
     this.client.logger.info('Sending updated guild count to statistics manager', { label: `Shard ${guild.shard.id}` })
     fetch(`${BASE_URL}/shards`, {
       method: 'post',
@@ -24,7 +24,7 @@ module.exports = class GuildCountListener extends Listener {
       ]),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${process.env.BOT_LIST_POSTER_SECRET}` 
+        Authorization: `Bearer ${process.env.BOT_LIST_POSTER_SECRET}`
       }
     })
   }
