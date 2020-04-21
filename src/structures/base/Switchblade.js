@@ -1,8 +1,9 @@
 const { CommandClient } = require('eris')
 const Loaders = require('../../loaders')
+const { LoaderPriority } = require('../Loader.js')
 const { readFileSync } = require('fs')
-const chalk = require('chalk')
 const winston = require('winston')
+const chalk = require('chalk')
 
 module.exports = class Switchblade extends CommandClient {
   constructor(token, options, commandOptions) {
@@ -15,7 +16,7 @@ module.exports = class Switchblade extends CommandClient {
     if (process.env.NODE_ENV !== 'production') console.log(readFileSync('bigtitle.txt', 'utf8').toString().replace(/{UNICODE}/g, '\u001b['))
     this.logger.info('Starting switchblade...', { label: 'Switchblade' })
     this.initializeLoaders()
-    
+
     this.connect()
   }
 
@@ -38,16 +39,27 @@ module.exports = class Switchblade extends CommandClient {
     }
   }
 
-  async initializeLoaders () {
+  async initializeLoaders() {
+    const loaders = [[], [], []]
     for (let file in Loaders) {
       const loader = new Loaders[file](this)
-      let success = true
-      try {
-        success = await loader.preLoad()
-      } catch (error) {
-        this.logger.error(error.stack, { label: 'Loaders', stack: error.stack })
-      } finally {
-        if (!success && loader.critical) process.exit(1)
+      loaders[loader.priority].push(loader)
+    }
+
+    for (let loaderPriority of loaders) {
+      const priority = Object.keys(LoaderPriority)[loaders.indexOf(loaderPriority)]
+      this.logger.info(`Starting to load ${chalk.yellow(priority)}`, { label: 'Loaders' })
+
+      for (let loader of loaderPriority) {
+        let success = true
+        
+        try {
+          success = await loader.preLoad()
+        } catch (error) {
+          this.logger.error(error.stack, { label: 'Loaders', stack: error.stack })
+        } finally {
+          if (!success && loader.critical) process.exit(1)
+        }
       }
     }
   }

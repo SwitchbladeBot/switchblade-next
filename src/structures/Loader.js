@@ -1,5 +1,17 @@
 const { createOptionHandler, FileUtils } = require('../utils')
 
+/**
+ * Loader priority, in this order:
+ * HIGH
+ * NORMAL
+ * LOW
+ */
+const LoaderPriority = {
+  HIGH: 0,
+  NORMAL: 1,
+  LOW: 2
+}
+
 module.exports = class Loader {
   /**
    * @param {Object} opts
@@ -12,6 +24,7 @@ module.exports = class Loader {
     this.critical = options.optional('critical', false)
     
     this.name = options.optional('name', this.constructor.name)
+    this.priority = options.optional('priority', LoaderPriority.NORMAL)
 
     this.client = client
   }
@@ -22,7 +35,7 @@ module.exports = class Loader {
       if (!success) throw new Error(`Unhandled error`)
       return success
     } catch (e) {
-      this.client.logger.error(`Failed to load ${this.name}`, { label: 'Loader' })
+      this.client.logger.error(`Failed to load ${this.name}`, { label: 'Loaders' })
       return false
     }
   }
@@ -32,7 +45,7 @@ module.exports = class Loader {
     let success = 0
     let fails = 0
     const errorFunction = e => {
-      this.client.logger.error(e)
+      this.client.logger.error(e, { label: 'Loaders'})
       fails++
     }
     const successFunction = file => {
@@ -45,8 +58,8 @@ module.exports = class Loader {
       }
     }
     await FileUtils.requireDirectory(path, successFunction, errorFunction, recursive).then(() => {
-      if (fails) this.client.logger.warn(`${success} types of ${this.name} loaded, ${fails} failed.`, { label: this.name })
-      else this.client.logger.info(`All ${success} types of ${this.name} loaded without errors.`, { label: this.name })
+      if (fails) this.client.logger.warn(`${success} types of ${this.name} loaded, ${fails} failed.`, { label: 'Loaders' })
+      else this.client.logger.info(`All ${success} types of ${this.name} loaded without errors.`, { label: 'Loaders' })
     })
     return true
   }
@@ -59,3 +72,5 @@ module.exports = class Loader {
     throw new Error(`The ${this.name} loader has not implemented the loadFile() function`)
   }
 }
+
+module.exports.LoaderPriority = LoaderPriority

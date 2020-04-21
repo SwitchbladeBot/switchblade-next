@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/SwitchbladeBot/switchblade-next#readme",
   "dependencies": {
+    "axios": "^0.19.2",
     "chalk": "^3.0.0",
     "eris": "^0.11.2",
     "winston": "^3.2.1"
