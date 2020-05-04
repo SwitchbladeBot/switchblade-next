@@ -13,10 +13,6 @@ class DeezerAPI extends ApiWrapper {
     })
   }
 
-  getTrack (id) {
-    return this.request('fala')
-  }
-
   search(q) {
     return this.request.get('search', {
       params: { q }
