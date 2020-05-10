@@ -1,6 +1,11 @@
 const Sentry = require('@sentry/node')
 Sentry.init({ dsn: process.env.SENTRY_DSN })
 
+const tracer = require('dd-trace').init({
+  service: 'switchblade-next',
+  logInjection: true
+})
+
 const { Switchblade } = require('./structures/base')
 
 const CLUSTER_ID = process.env.INDEX_CLUSTER_ID_FROM_ONE ? parseInt(process.env.CLUSTER_ID) - 1 : parseInt(process.env.CLUSTER_ID)

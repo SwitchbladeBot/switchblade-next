@@ -26,6 +26,7 @@
   "dependencies": {
     "@sentry/node": "^5.15.4",
     "chalk": "^3.0.0",
+    "dd-trace": "^0.20.3",
     "eris": "^0.11.2",
     "node-fetch": "^2.6.0",
     "winston": "^3.2.1"
