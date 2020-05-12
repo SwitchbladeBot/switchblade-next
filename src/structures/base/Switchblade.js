@@ -6,13 +6,18 @@ const winston = require('winston')
 module.exports = class Switchblade extends CommandClient {
   constructor (token, options, commandOptions) {
     super(token, options, commandOptions)
+    this.token = token
     this.initializeWinston()
     this.start()
   }
 
   start () {
     if (process.env.NODE_ENV !== 'production') console.log(readFileSync('bigtitle.txt', 'utf8').toString().replace(/{UNICODE}/g, '\u001b['))
-    this.logger.info('Starting switchblade...', { label: 'Switchblade' })
+    if (!this.token) {
+      this.logger.error('Discord token not specified. Exiting.')
+      process.exit(1)
+    }
+    this.logger.info('Starting Switchblade...', { label: 'Switchblade' })
     this.initializeLoaders()
 
     this.connect()
@@ -29,7 +34,7 @@ module.exports = class Switchblade extends CommandClient {
           winston.format.colorize(),
           winston.format.timestamp(),
           winston.format.printf(
-            info => `${info.timestamp} ${info.level} [${info.label || ''}]: ${info.message}`
+            info => `${info.timestamp} ${info.level}${info.label ? ` [${info.label || ''}]` : ''}: ${info.message}`
           )
         ),
         level: process.env.LOGGING_LEVEL || 'silly'
