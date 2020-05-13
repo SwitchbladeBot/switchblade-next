@@ -27,7 +27,7 @@ module.exports = class RedisListener extends Listener {
 
   onClose (hadError) {
     if (hadError) {
-      this.client.logger.error(`Connection closed with errors`, { label: 'Redis' })
+      this.client.logger.error('Connection closed with errors', { label: 'Redis' })
     } else {
       this.client.logger.warn('Connection closed without errors', { label: 'Redis' })
     }
