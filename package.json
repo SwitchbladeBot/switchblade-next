@@ -29,6 +29,7 @@
     "dd-trace": "^0.20.3",
     "eris": "^0.11.2",
     "node-fetch": "^2.6.0",
+    "tedis": "^0.1.12",
     "winston": "^3.2.1"
   },
   "devDependencies": {

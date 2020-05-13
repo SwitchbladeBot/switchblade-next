@@ -2,6 +2,7 @@ const { CommandClient } = require('eris')
 const Loaders = require('../../loaders')
 const { readFileSync } = require('fs')
 const winston = require('winston')
+const { Tedis } = require("tedis");
 
 module.exports = class Switchblade extends CommandClient {
   constructor (token, options, commandOptions) {
@@ -18,6 +19,8 @@ module.exports = class Switchblade extends CommandClient {
       process.exit(1)
     }
     this.logger.info('Starting Switchblade...', { label: 'Switchblade' })
+
+    this.initializeRedis()
     this.initializeLoaders()
 
     this.connect()
@@ -40,6 +43,18 @@ module.exports = class Switchblade extends CommandClient {
         level: process.env.LOGGING_LEVEL || 'silly'
       }))
     }
+  }
+
+  initializeRedis () {
+    // TODO: Find a way to capture initialization events
+    //       Currently, the RedisListener is only loaded after Tedis tries to connect, which
+    //       leads to it not capturing the first connection events.
+    this.logger.info('Initializing Redis', { label: 'Redis' })
+    this.redis = new Tedis({
+      host: process.env.REDIS_SERVICE_HOST || process.env.REDIS_HOST || 'redis',
+      port: process.env.REDIS_SERVICE_PORT || process.env.REDIS_PORT || 6379,
+      password: process.env.REDIS_PASSWORD
+    })
   }
 
   async initializeLoaders () {

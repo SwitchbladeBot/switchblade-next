@@ -32,7 +32,7 @@ module.exports = class Loader {
     let success = 0
     let fails = 0
     const errorFunction = e => {
-      this.client.logger.error(e)
+      this.client.logger.error(e.stack || e, { label: 'Loader' })
       fails++
     }
     const successFunction = file => {

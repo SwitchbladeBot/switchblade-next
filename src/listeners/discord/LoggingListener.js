@@ -1,9 +1,18 @@
-const { Listener } = require('../structures')
+const { Listener } = require('../../structures')
 
 module.exports = class LoggingListener extends Listener {
   constructor (client) {
-    const discordEvents = ['error', 'disconnect', 'debug', 'shardDisconnect', 'connect', 'rawWS']
-    super({ discordEvents }, client)
+    super({
+      listenerClient: 'discord',
+      events: [
+        'error',
+        'disconnect',
+        'debug',
+        'shardDisconnect',
+        'connect',
+        'rawWS'
+      ]
+    }, client)
   }
 
   onError (error, shardId) {

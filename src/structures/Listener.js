@@ -4,7 +4,8 @@ module.exports = class Listener {
   constructor (options, client) {
     options = createOptionHandler('Listener', options)
 
-    this.discordEvents = options.optional('discordEvents', [])
+    this.events = options.optional('events', [])
+    this.listenerClient = options.optional('listenerClient', 'discord')
 
     this.client = client
   }

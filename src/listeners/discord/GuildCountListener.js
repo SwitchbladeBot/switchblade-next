@@ -1,12 +1,17 @@
-const { Listener } = require('../structures')
+const { Listener } = require('../../structures')
 const fetch = require('node-fetch')
 
 const BASE_URL = process.env.BOT_LIST_POSTER_URL || 'http://bot-list-poster'
 
 module.exports = class GuildCountListener extends Listener {
   constructor (client) {
-    const discordEvents = ['guildCreate', 'guildDelete']
-    super({ discordEvents }, client)
+    super({
+      listenerClient: 'discord',
+      events: [
+        'guildCreate',
+        'guildDelete'
+      ]
+    }, client)
   }
 
   onGuildCreate (guild) { this.updateGuildCount(guild) }
