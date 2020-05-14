@@ -35,10 +35,15 @@ module.exports = class Loader {
       this.client.logger.error(e.stack || e, { label: 'Loader' })
       fails++
     }
-    const successFunction = file => {
+    const successFunction = (file, fileName) => {
       try {
-        if (this.loadFile(file)) success++
-        else throw new Error(`'${this.constructor.name}.loadFile()' returned an unhandled error.`)
+        if (this.loadFile(file)) {
+          this.client.logger.debug(`Loaded ${fileName}`, { label: this.name })
+          success++
+        } else {
+          this.client.logger.debug(`Failed to load ${fileName}`, { label: this.name })
+          throw new Error(`'${this.constructor.name}.loadFile()' returned an unhandled error.`)
+        }
       } catch (e) {
         errorFunction(e)
       }
